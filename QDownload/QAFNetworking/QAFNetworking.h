@@ -10,7 +10,7 @@
 /// AFNetworking - 3.1.0
 
 
-#import "AFNetworking/AFNetworking.h"
+#import "AFNetworking.h"
 
 @interface QAFNetworking : AFHTTPSessionManager
 

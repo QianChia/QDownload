@@ -18,6 +18,7 @@
 
 #import "QAFNetworking.h"
 
+#import "UIButton+Progress.h"
 
 
 #endif /* QDownload_h */
