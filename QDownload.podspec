@@ -34,10 +34,6 @@ Pod::Spec.new do |s|
     ss.subspec 'AFNetworking' do |sss|
       sss.source_files        = 'QDownload/QAFNetworking/AFNetworking/*.{h,m}'
     end
-
-    ss.subspec 'UIKit+AFNetworking' do |sss|
-      sss.source_files        = 'QDownload/QAFNetworking/UIKit+AFNetworking/*.{h,m}'
-    end
   end
 
 end
