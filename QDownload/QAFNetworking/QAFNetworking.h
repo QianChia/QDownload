@@ -7,7 +7,7 @@
 //
 
 
-/// AFNetworking - 2.5.4
+/// AFNetworking - 3.1.0
 
 
 #import "AFNetworking/AFNetworking.h"

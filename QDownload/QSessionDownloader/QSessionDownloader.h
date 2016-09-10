@@ -1,15 +1,15 @@
 //
-//  QConnectionDownloader.h
+//  QSessionDownloader.h
 //  QDownload
 //
-//  Created by JHQ0228 on 16/7/12.
+//  Created by JHQ0228 on 16/7/14.
 //  Copyright © 2016年 QianQian-Studio. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "UIButton+Progress.h"
 
-@interface QConnectionDownloader : NSObject
+@interface QSessionDownloader : NSObject
 
 /**
  *  创建单例类对象

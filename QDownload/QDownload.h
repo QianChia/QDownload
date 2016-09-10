@@ -14,7 +14,7 @@
 
 #import "QWebImage.h"
 
-#import "QConnectionDownloader.h"
+#import "QSessionDownloader.h"
 
 #import "QAFNetworking.h"
 

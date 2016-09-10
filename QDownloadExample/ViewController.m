@@ -294,14 +294,14 @@
 /*******************************************************************************/
 
 
-/// QConnectionDownloader
+/// QSessionDownloader
 
 
 /// 开始下载
 
 - (void)startDownloadWithURL:(NSURL *)url button:(UIButton *)button {
     
-    [[QConnectionDownloader defaultDownloader] q_downloadWithURL:url progress:^(float progress) {
+    [[QSessionDownloader defaultDownloader] q_downloadWithURL:url progress:^(float progress) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [button q_setButtonWithProgress:progress lineWidth:10 lineColor:nil backgroundColor:[UIColor yellowColor]];
@@ -313,7 +313,18 @@
         
     } failed:^(NSError *error) {
         
-        NSLog(@"文件下载失败：%@", error);
+        if ([error.userInfo[NSLocalizedDescriptionKey] isEqualToString:@"pauseDownload"]) {
+            
+            NSLog(@"暂停下载");
+            
+        } else if ([error.userInfo[NSLocalizedDescriptionKey] isEqualToString:@"cancelDownload"]) {
+            
+            NSLog(@"取消下载");
+            
+        } else {
+            
+            NSLog(@"文件下载失败：%@", error.userInfo[NSLocalizedDescriptionKey]);
+        }
     }];
 }
 
@@ -321,23 +332,19 @@
 
 - (void)pauseDownloadWithURL:(NSURL *)url {
     
-    NSLog(@"暂停下载");
-    
-    [[QConnectionDownloader defaultDownloader] q_pauseWithURL:url];
+    [[QSessionDownloader defaultDownloader] q_pauseWithURL:url];
 }
 
 /// 取消下载
 
 - (void)cancelDownloadWithURL:(NSURL *)url button:(UIButton *)button {
     
-    NSLog(@"取消下载");
-    
-    [[QConnectionDownloader defaultDownloader] q_cancelWithURL:url];
+    [[QSessionDownloader defaultDownloader] q_cancelWithURL:url];
     
     [button q_setButtonWithProgress:0 lineWidth:10 lineColor:nil backgroundColor:[UIColor yellowColor]];
 }
 
-- (void)QConnectionDownloaderDemo {
+- (void)QSessionDownloadDemo {
     
     self.startBtn = [self createdButtonWithTitle:@"start" frame:CGRectMake(20, 40, 80, 80) action:@selector(start:)];
     self.goonBtn = [self createdButtonWithTitle:@"goon" frame:CGRectMake(20, 150, 70, 30) action:@selector(goon)];
@@ -401,7 +408,7 @@
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:config];
     
-    [[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+    [[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
         if (error == nil && responseObject != nil) {
             NSLog(@"success: %@ --- %@", responseObject, [responseObject class]);
@@ -417,13 +424,13 @@
     
     NSString *urlStr = @"http://192.168.88.200:8080/MJServer/video?type=JSON";
     
-    [[QAFNetworking sharedNetworkTools] GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[QAFNetworking sharedNetworkTools] GET:urlStr parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if (responseObject != nil) {
             NSLog(@"success: %@ --- %@", responseObject, [responseObject class]);
         }
         
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"failure: %@", error);
     }];
@@ -445,11 +452,11 @@
     
 //    [self QReachabilityDemo3];
     
-//    [self QConnectionDownloaderDemo];
+    [self QSessionDownloadDemo];
     
 //    [self QAFNetworkingDemo1];
     
-    [self QAFNetworkingDemo2];
+//    [self QAFNetworkingDemo2];
 }
 
 @end

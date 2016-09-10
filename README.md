@@ -193,9 +193,9 @@ GitHub：[QianChia](https://github.com/QianChia) ｜ Blog：[QianChia(Chinese)](
 	    
 	```
 
-### QConnectionDownloader
+### QSessionDownloader
 
-* QConnectionDownloader methods
+* QSessionDownloader methods
 
 	```objc
 		
@@ -216,34 +216,45 @@ GitHub：[QianChia](https://github.com/QianChia) ｜ Blog：[QianChia(Chinese)](
 		
 	```
 
-* The use of QConnectionDownloader
+* The use of QSessionDownloader
 
 	```objc
 		
 		// 开始下载
 
-		[[QConnectionDownloader defaultDownloader] q_downloadWithURL:url progress:^(float progress) {
-    
-    		dispatch_async(dispatch_get_main_queue(), ^{
-        		[button q_setButtonWithProgress:progress lineWidth:10 lineColor:nil backgroundColor:[UIColor yellowColor]];
-    		});
-    
-		} successed:^(NSString *targetPath) {
-    
-    		NSLog(@"文件下载成功：%@", targetPath);
-    
-		} failed:^(NSError *error) {
-    
-    		NSLog(@"文件下载失败：%@", error);
-		}];
+    	[[QSessionDownloader defaultDownloader] q_downloadWithURL:url progress:^(float progress) {
+        
+        	dispatch_async(dispatch_get_main_queue(), ^{
+            	[button q_setButtonWithProgress:progress lineWidth:10 lineColor:nil backgroundColor:[UIColor yellowColor]];
+        	});
+        
+    	} successed:^(NSString *targetPath) {
+        
+        	NSLog(@"文件下载成功：%@", targetPath);
+        
+    	} failed:^(NSError *error) {
+        
+        	if ([error.userInfo[NSLocalizedDescriptionKey] isEqualToString:@"pauseDownload"]) {
+            
+            	NSLog(@"暂停下载");
+            
+        	} else if ([error.userInfo[NSLocalizedDescriptionKey] isEqualToString:@"cancelDownload"]) {
+            
+            	NSLog(@"取消下载");
+            
+        	} else {
+            
+            	NSLog(@"文件下载失败：%@", error.userInfo[NSLocalizedDescriptionKey]);
+        	}
+    	}];
 
 		// 暂停下载
 
-    	[[QConnectionDownloader defaultDownloader] q_pauseWithURL:url];
+    	[[QSessionDownloader defaultDownloader] q_pauseWithURL:url];
 
 		// 取消下载
 
-    	[[QConnectionDownloader defaultDownloader] q_cancelWithURL:url];
+    	[[QSessionDownloader defaultDownloader] q_cancelWithURL:url];
     	
 	```
 
@@ -270,14 +281,14 @@ GitHub：[QianChia](https://github.com/QianChia) ｜ Blog：[QianChia(Chinese)](
     	NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     	AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:config];
     
-    	[[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+    	[[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
         	if (error == nil && responseObject != nil) {
             	NSLog(@"success: %@ --- %@", responseObject, [responseObject class]);
         	} else {
             	NSLog(@"failure: %@", error);
         	}
-    	}] resume];
+   	 	}] resume];
 	
 	```
 
@@ -287,13 +298,13 @@ GitHub：[QianChia](https://github.com/QianChia) ｜ Blog：[QianChia(Chinese)](
     
     	NSString *urlStr = @"http://192.168.88.200:8080/MJServer/video?type=JSON";
     
-    	[[QAFNetworking sharedNetworkTools] GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    	[[QAFNetworking sharedNetworkTools] GET:urlStr parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         	if (responseObject != nil) {
             	NSLog(@"success: %@ --- %@", responseObject, [responseObject class]);
         	}
         
-    	} failure:^(NSURLSessionDataTask *task, NSError *error) {
+    	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         	NSLog(@"failure: %@", error);
     	}];
