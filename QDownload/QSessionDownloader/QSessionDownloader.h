@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UIButton+Progress.h"
 
 @interface QSessionDownloader : NSObject
 
