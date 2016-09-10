@@ -14,25 +14,36 @@ Pod::Spec.new do |s|
 
   s.subspec 'QReachability' do |ss|
     ss.source_files        = 'QDownload/QReachability/QReachability.{h,m}'
+    ss.public_header_files = 'QDownload/QReachability/QReachability.h'
 
     ss.subspec 'Reachability' do |sss|
       sss.source_files        = 'QDownload/QReachability/Reachability/Reachability.{h,m}'
+      sss.public_header_files = 'QDownload/QReachability/Reachability/Reachability.h'
     end
   end
 
   s.subspec 'QWebImage' do |ss|
     ss.source_files        = 'QDownload/QWebImage/*.{h,m}'
+    ss.public_header_files = 'QDownload/QWebImage/QWebImage.h'
   end
 
   s.subspec 'QSessionDownloader' do |ss|
     ss.source_files        = 'QDownload/QSessionDownloader/*.{h,m}'
+    ss.public_header_files = 'QDownload/QSessionDownloader/QSessionDownloader.h'
   end
 
   s.subspec 'QAFNetworking' do |ss|
     ss.source_files        = 'QDownload/QAFNetworking/QAFNetworking.{h,m}'
+    ss.public_header_files = 'QDownload/QAFNetworking/QAFNetworking.h'
 
     ss.subspec 'AFNetworking' do |sss|
       sss.source_files        = 'QDownload/QAFNetworking/AFNetworking/*.{h,m}'
+      sss.public_header_files = 'QDownload/QAFNetworking/AFNetworking/AFNetworking.h'
+    end
+
+    ss.subspec 'UIKit+AFNetworking' do |sss|
+      sss.source_files        = 'QDownload/QAFNetworking/UIKit+AFNetworking/*.{h,m}'
+      sss.public_header_files = 'QDownload/QAFNetworking/UIKit+AFNetworking/UIKit+AFNetworking.h'
     end
   end
 
