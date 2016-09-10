@@ -11,6 +11,7 @@
 
 
 #import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 
 @interface QAFNetworking : AFHTTPSessionManager
 

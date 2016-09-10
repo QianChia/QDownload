@@ -38,12 +38,7 @@ Pod::Spec.new do |s|
 
     ss.subspec 'AFNetworking' do |sss|
       sss.source_files        = 'QDownload/QAFNetworking/AFNetworking/*.{h,m}'
-      sss.public_header_files = 'QDownload/QAFNetworking/AFNetworking/AFNetworking.h'
-    end
-
-    ss.subspec 'UIKit+AFNetworking' do |sss|
-      sss.source_files        = 'QDownload/QAFNetworking/UIKit+AFNetworking/*.{h,m}'
-      sss.public_header_files = 'QDownload/QAFNetworking/UIKit+AFNetworking/UIKit+AFNetworking.h'
+      sss.public_header_files = 'QDownload/QAFNetworking/AFNetworking/{AFNetworking.h,UIKit+AFNetworking.h}'
     end
   end
 
