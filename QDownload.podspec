@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name         = 'QDownload'
   s.version      = '1.0.1'
   s.license      = 'MIT'
-  s.authors      = {'QianChia' => 'jhqian0228@icloud.com'}
+  s.authors      = {'QianChia' => 'qianchia@icloud.com'}
   s.summary      = 'A simple encapsulation of files to download'
   s.homepage     = 'https://github.com/QianChia/QDownload'
   s.source       = {:git => 'https://github.com/QianChia/QDownload.git', :tag => s.version}
